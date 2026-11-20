@@ -28,7 +28,7 @@ You need **OpenCode V2**, a configured provider/model, Git, and a Node.js versio
 From your project root, install the four skills using this repository's GitHub URL:
 
 ```bash
-npx skills add https://github.com/djzdavid/xtrem-programing-tdd -a opencode --skill setup backlog story pair
+npx skills add https://github.com/djzdavid/opencode-xp-tdd-skills -a opencode --skill setup backlog story pair
 ```
 
 Add `-g` to install them across projects. The installer manages skill files; it does not install OpenCode, copy [opencode.json](opencode.json), configure Context7, or install your application's stack. See the [CLI options](https://github.com/vercel-labs/skills/blob/main/docs/commands.md).
