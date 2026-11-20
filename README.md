@@ -25,10 +25,10 @@ You can start with `@backlog I want to add login`. If necessary decisions are mi
 
 You need **OpenCode V2**, a configured provider/model, Git, and a Node.js version supported by the [skills CLI](https://github.com/vercel-labs/skills) (currently 22.20 or later).
 
-From your project root, install the four skills using this repository's GitHub URL. Replace `OWNER/REPOSITORY` with its published location:
+From your project root, install the four skills using this repository's GitHub URL:
 
 ```bash
-npx skills add https://github.com/OWNER/REPOSITORY -a opencode --skill setup backlog story pair
+npx skills add https://github.com/djzdavid/xtrem-programing-tdd -a opencode --skill setup backlog story pair
 ```
 
 Add `-g` to install them across projects. The installer manages skill files; it does not install OpenCode, copy [opencode.json](opencode.json), configure Context7, or install your application's stack. See the [CLI options](https://github.com/vercel-labs/skills/blob/main/docs/commands.md).
