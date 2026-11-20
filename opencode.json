@@ -1,0 +1,39 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "model": "openai/gpt-6.1-sol",
+    "skills": [
+        "./skills"
+    ],
+    "permissions": [
+        { "action": "skill", "resource": "backlog", "effect": "ask" },
+        { "action": "skill", "resource": "setup", "effect": "ask" },
+        { "action": "skill", "resource": "story", "effect": "ask" },
+        { "action": "skill", "resource": "pair", "effect": "ask" }
+    ],
+    "mcp": {
+        "servers": {
+            "context7": {
+                "type": "remote",
+                "url": "https://mcp.context7.com/mcp/oauth"
+            }
+        }
+    },
+    "commands": {
+        "setup": {
+            "description": "Acordar stack y design system, y guardar decisiones aprobadas en AGENTS.md",
+            "template": "Estoy invocando /setup explícitamente. Carga la skill `setup` y sigue sus instrucciones para definir o revisar el stack, design system, directorios y herramientas del agente. Presenta la propuesta y espera mi aprobación antes de guardar decisiones o instalar herramientas. Solicitud: $ARGUMENTS"
+        },
+        "backlog": {
+            "description": "Iniciar sesión de descubrimiento y creación de backlog vertical",
+            "template": "Estoy invocando /backlog explícitamente. Carga la skill `backlog` y sigue sus instrucciones. Revisa primero el contexto y la preparación del proyecto; orienta al siguiente paso necesario o propón las historias funcionales de esta solicitud: $ARGUMENTS"
+        },
+        "story": {
+            "description": "Refinar y guardar una historia o tarea de preparación tras aprobar criterios y plan",
+            "template": "Estoy invocando /story explícitamente. Carga la skill `story` y sigue sus instrucciones para refinar esta historia o tarea de preparación. Presenta criterios, plan y destino; espera mi aprobación antes de guardar la especificación. Solicitud: $ARGUMENTS"
+        },
+        "pair": {
+            "description": "Iniciar sesión de Pair Programming con TDD paso a paso",
+            "template": "Estoy invocando /pair explícitamente. Carga la skill `pair` y sigue sus instrucciones. Lee la especificación o resuelve su archivo, revisa el contexto y el avance real, y propón o retoma la lista aprobada de pruebas o preparación. Registra únicamente resultados verificados. Solicitud: $ARGUMENTS"
+        }
+    }
+}
