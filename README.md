@@ -1,47 +1,47 @@
-# Desarrollo con IA en OpenCode
+# AI-Assisted Development in OpenCode
 
-Cuatro skills para definir un proyecto e implementar funcionalidades en pasos pequeños. La IA propone y escribe; tú apruebas las decisiones y decides cuándo continuar.
+Four skills for defining a project and implementing features in small steps. The AI proposes and writes; you approve decisions and choose when to continue.
 
-## Las skills
+## The skills
 
-| Skill | Qué hace | Dónde deja el resultado |
+| Skill | What it does | Where the result goes |
 | --- | --- | --- |
-| [`@setup`](skills/setup/SKILL.md) | Define o revisa stack, diseño, directorios y herramientas del agente. | Decisiones aprobadas en `AGENTS.md`. |
-| [`@backlog`](skills/backlog/SKILL.md) | Propone las historias de usuario (HU) necesarias, pequeñas y funcionales. | Conversación, salvo que pidas guardarlas. |
-| [`@story`](skills/story/SKILL.md) | Refina una HU o tarea de preparación: hasta tres criterios y cinco puntos de plan. | Un archivo por especificación, tras aprobarlo; por defecto en `docs/stories/`. |
-| [`@pair`](skills/pair/SKILL.md) | Ejecuta la especificación, verifica resultados y registra el avance. | Código, pruebas y checklist en el archivo de la historia. |
+| [`@setup`](skills/setup/SKILL.md) | Defines or revises the stack, design system, directories, and agent tools. | Approved decisions in `AGENTS.md`. |
+| [`@backlog`](skills/backlog/SKILL.md) | Proposes the necessary small, vertical user stories. | The conversation, unless you ask to save them. |
+| [`@story`](skills/story/SKILL.md) | Refines a user story or preparation task: up to three criteria and five plan points. | One file per approved specification, under `docs/stories/` by default. |
+| [`@pair`](skills/pair/SKILL.md) | Executes the specification, verifies results, and records progress. | Code, tests, and a checklist in the story file. |
 
 ```text
-Base por definir:   @setup → aprobar decisiones
-Base por preparar: @story preparación → aprobar → @pair preparación
-Funcionalidades:   @backlog → @story una HU → aprobar → @pair archivo
+Define the foundation:  @setup → approve decisions
+Prepare the foundation: @story preparation → approve → @pair preparation
+Build features:         @backlog → @story one story → approve → @pair file
 ```
 
-Puedes comenzar con `@backlog quiero agregar login`. Si faltan definiciones necesarias, sugerirá `@setup`; si falta preparar la base aprobada, sugerirá `@story` para esa preparación. Las skills no se invocan entre sí automáticamente.
+You can start with `@backlog I want to add login`. If necessary decisions are missing, it suggests `@setup`; if the approved foundation still needs preparation, it suggests `@story` for that work. Skills never invoke each other automatically.
 
-`@setup` es independiente. Se usa al comienzo y para revisar decisiones, no en cada nueva funcionalidad. Distingue entre stack definido, preparación pendiente y entorno verificado.
+`@setup` is independent. Use it initially and to revise decisions, not for every new feature. It distinguishes an agreed stack from pending preparation and a verified environment.
 
-## Instalación con npx
+## Install with npx
 
-Necesitas **OpenCode V2**, un proveedor/modelo configurado, Git y una versión de Node.js compatible con el [CLI de skills](https://github.com/vercel-labs/skills) (actualmente, 22.20 o posterior).
+You need **OpenCode V2**, a configured provider/model, Git, and a Node.js version supported by the [skills CLI](https://github.com/vercel-labs/skills) (currently 22.20 or later).
 
-Desde la raíz del proyecto, instala las cuatro skills con la URL de este repositorio en GitHub. Sustituye `USUARIO/REPOSITORIO` por su ubicación publicada:
+From your project root, install the four skills using this repository's GitHub URL. Replace `OWNER/REPOSITORY` with its published location:
 
 ```bash
-npx skills add https://github.com/USUARIO/REPOSITORIO -a opencode --skill setup backlog story pair
+npx skills add https://github.com/OWNER/REPOSITORY -a opencode --skill setup backlog story pair
 ```
 
-Añade `-g` para instalarlas para todos tus proyectos. El instalador administra los archivos de skills; no instala OpenCode, no copia [opencode.json](opencode.json), no configura Context7 ni instala el stack de tu aplicación. Consulta las [opciones del CLI](https://github.com/vercel-labs/skills/blob/main/docs/commands.md).
+Add `-g` to install them across projects. The installer manages skill files; it does not install OpenCode, copy [opencode.json](opencode.json), configure Context7, or install your application's stack. See the [CLI options](https://github.com/vercel-labs/skills/blob/main/docs/commands.md).
 
-Abre o reinicia OpenCode y menciona la skill por su ID, por ejemplo `@setup Revisa este proyecto`. Las cuatro skills deshabilitan la invocación automática mediante `disable-model-invocation: true`; siguen disponibles mediante mención explícita. No necesitas registrar comandos slash. Consulta la [documentación de skills de OpenCode](https://opencode.ai/docs/skills/).
+Open or restart OpenCode and mention a skill by its ID, for example `@setup Review this project`. All four skills disable automatic invocation through `disable-model-invocation: true` and remain available through explicit mentions. No slash commands need to be registered. See the [OpenCode skills documentation](https://opencode.ai/docs/skills/).
 
-Para frontend y backend separados, abre la sesión en el directorio padre. La skill registra las carpetas y el agente ejecuta cada comando donde corresponde.
+For separate frontend and backend directories, open the session in their parent directory. The skill records the layout, and the agent runs each command in the appropriate location.
 
-[opencode.json](opencode.json) queda como ejemplo **opcional** para quien prefiera comandos `/setup`, `/backlog`, `/story` y `/pair`. No lo copies completo sobre una configuración existente: incluye un modelo, permisos y rutas que debes adaptar. Las menciones `@` funcionan sin ese archivo; siguen sujetas a los permisos de tu OpenCode.
+[opencode.json](opencode.json) is an **optional** example for users who prefer `/setup`, `/backlog`, `/story`, and `/pair` commands. Do not overwrite an existing configuration with it: it includes a model, permissions, and paths that you must adapt. The `@` mentions work without that file and remain subject to your OpenCode permissions.
 
-### Context7: autenticación
+### Context7 authentication
 
-Context7 es opcional y se configura por separado de la instalación de skills. Para usarlo con **OAuth**, fusiona este fragmento en tu configuración de OpenCode V2, conservando los demás ajustes:
+Context7 is optional and configured separately from skill installation. To use **OAuth**, merge this snippet into your OpenCode V2 configuration, preserving other settings:
 
 ```json
 {
@@ -56,173 +56,172 @@ Context7 es opcional y se configura por separado de la instalación de skills. P
 }
 ```
 
-Después, desde la raíz del proyecto, ejecuta en una terminal:
+Then run these commands in a terminal from the project root:
 
 ```bash
 opencode mcp auth context7
 opencode mcp list
 ```
 
-Completa el inicio de sesión en el navegador y comprueba que esté conectado. También puedes hacerlo desde `/mcps` en OpenCode. No necesitas instalar un servidor local ni un plugin adicional. Referencias: [MCP en OpenCode](https://opencode.ai/docs/mcp-servers/) y [Context7 para OpenCode](https://context7.com/docs/clients/opencode).
+Complete sign-in in your browser and check that the server is connected. You can also sign in through `/mcps` in OpenCode. No local server or additional plugin is needed. References: [OpenCode MCP servers](https://opencode.ai/docs/mcp-servers/) and [Context7 for OpenCode](https://context7.com/docs/clients/opencode).
 
-Autenticarse no implica pagar: hay un [plan gratuito con cuota](https://context7.com/plans). Si falta autenticación, se agota la cuota o el servicio no está disponible, el agente informa la limitación y recurre a documentación oficial mediante sus herramientas disponibles. Una API key es otra opción, pero requiere cambiar la configuración; no guardes credenciales en el repositorio.
+Signing in does not require a paid plan: a [free plan with a quota](https://context7.com/plans) is available. If authentication is missing, the quota is exhausted, or the service is unavailable, the agent reports the limitation and uses official documentation through its available tools. An API key is another option, but requires configuration changes; never store credentials in the repository.
 
-## Ejemplo 1: proyecto ya instalado
+## Example 1: an existing project
 
-Abre OpenCode en el directorio padre de `proyecto-frontend` y `proyecto-backend`. Envía los mensajes por separado, revisando cada propuesta.
+Open OpenCode in the parent directory of `project-frontend` and `project-backend`. Send messages separately, reviewing each proposal.
 
-**1. Documenta lo existente**, si todavía no está acordado en `AGENTS.md`:
+**1. Document the existing foundation**, if it has not already been agreed in `AGENTS.md`:
 
 ```text
-@setup El frontend y backend ya están instalados en proyecto-frontend
- y proyecto-backend. La raíz es el directorio actual.
-Inspecciona y conserva el stack y diseño existentes. Identifica los
-comandos y sus directorios. Propón qué registrar en AGENTS.md,
-sin reinstalar dependencias ni generar variantes visuales nuevas.
+@setup The frontend and backend are already installed in project-frontend
+and project-backend. The current directory is the project root.
+Inspect and preserve the existing stack and design. Identify commands
+and their working directories. Propose what to record in AGENTS.md,
+without reinstalling dependencies or generating new visual variants.
 ```
 
-Tras revisar:
+After reviewing:
 
 ```text
-Apruebo las decisiones y su guardado. No instales herramientas adicionales.
+I approve the decisions and saving them. Do not install additional tools.
 ```
 
-Encontrar archivos no demuestra que el entorno funcione. El agente señala lo que aún no verificó; si solo faltaba documentar, no crea una tarea de inicialización.
+Finding files does not prove the environment works. The agent identifies anything it has not verified; if only documentation was missing, it does not create an initialization task.
 
-**2. Pide la funcionalidad y elige una HU:**
-
-```text
-@backlog Quiero login con correo y contraseña: acceso válido y mensaje
-ante credenciales incorrectas. Sin registro ni recuperación.
-```
+**2. Request a feature and choose a user story:**
 
 ```text
-@story Refinemos la HU de entrar con credenciales válidas.
-Usa AGENTS.md y el código actual.
+@backlog I want email and password login: successful access and a message
+for invalid credentials. No registration or password recovery.
 ```
 
 ```text
-Apruebo los criterios, el plan y la ruta propuesta. Guarda la historia.
+@story Refine the story for signing in with valid credentials.
+Use AGENTS.md and the current code.
 ```
 
-**3. Implementa usando la ruta que devolvió el agente:**
+```text
+I approve the criteria, plan, and proposed path. Save the story.
+```
+
+**3. Implement using the path returned by the agent:**
 
 ```text
 @pair docs/stories/001-login.md
 ```
 
-Después de revisar los nombres y niveles de prueba:
+After reviewing the test names and levels:
 
 ```text
-Apruebo la lista. Ejecuta un ciclo TDD y detente.
+I approve the list. Run one TDD cycle and stop.
 ```
 
-Para avanzar, responde `Continúa con el siguiente test`. Los nombres e identificadores de archivos en estos ejemplos son ilustrativos; usa los de tu proyecto.
+To move forward, reply `Continue with the next test`. File names and identifiers in these examples are illustrative; use the ones from your project.
 
-## Ejemplo 2: proyecto desde cero
+## Example 2: a project from scratch
 
-Abre OpenCode en la carpeta destinada a la aplicación, con las cuatro skills instaladas.
+Open OpenCode in the directory intended for the application, with the four skills installed.
 
-**1. Acuerda la base y el diseño:**
+**1. Agree on the foundation and design:**
 
 ```text
-@setup Quiero una aplicación de reservas para una peluquería.
-El primer flujo será consultar horarios disponibles. El proyecto
-está vacío. Conozco React y Python, prefiero PostgreSQL y shadcn/ui.
+@setup I want a booking application for a hair salon.
+The first flow will show available time slots. The project is empty.
+I know React and Python, and prefer PostgreSQL and shadcn/ui.
 
-Usa el directorio actual como raíz, con proyecto-frontend y
-proyecto-backend. Propón el stack mínimo, tres variantes visuales,
-las herramientas del agente y la preparación necesaria.
+Use the current directory as the root, with project-frontend and
+project-backend inside. Propose the minimum stack, three visual
+variants, agent tools, and the preparation needed.
 ```
 
-El preview compara colores, tipografía, espaciado, bordes y radios con los mismos controles de muestra. Se guarda aislado, por defecto en `docs/design-preview/`. Si hay un servidor disponible, el agente entrega una URL local verificada y cómo reiniciarlo o detenerlo; si no, consulta antes de añadir herramientas.
+The preview compares colors, typography, spacing, borders, and radii using the same sample controls. It stays isolated, under `docs/design-preview/` by default. If a server is available, the agent provides a verified local URL and instructions to restart or stop it; otherwise, it asks before adding tools.
 
 ```text
-Elijo la opción 2. Reduce los radios y muéstrame el ajuste.
+I choose option 2. Reduce the border radii and show me the adjustment.
 ```
 
-Cuando estés conforme:
+When you are satisfied:
 
 ```text
-Apruebo el stack, los directorios, la opción 2 ajustada y las
-instalaciones de herramientas del agente descritas en la propuesta.
-Guarda las decisiones en AGENTS.md.
+I approve the stack, directories, adjusted option 2, and the agent-tool
+installations described in the proposal. Save the decisions in AGENTS.md.
 ```
 
-`@setup` puede instalar las skills y MCP aprobados, pero deja la creación de la aplicación para `@pair`. El diseño aprobado se registra como tokens y convenciones. El preview es aproximado: `@pair` aplica esos valores con el tema y componentes reales, sin copiar su CSS.
+`@setup` can install approved skills and MCP servers, but leaves application creation to `@pair`. The approved design is recorded as tokens and conventions. The preview is approximate: `@pair` applies those values through the real theme and components without copying the preview CSS.
 
-**2. Planifica la preparación:**
+**2. Plan the preparation:**
 
 ```text
-@story Preparar la base técnica y visual acordada en @setup:
-inicialización, dependencias, tema y entorno de pruebas necesarios.
-Respeta los directorios de frontend y backend.
+@story Prepare the technical and visual foundation agreed in @setup:
+the necessary initialization, dependencies, theme, and test environment.
+Respect the frontend and backend directories.
 ```
 
 ```text
-Apruebo los criterios, el plan, la ruta y las excepciones de
-preparación descritas en la propuesta. Guarda la especificación.
+I approve the criteria, plan, path, and preparation exceptions described
+in the proposal. Save the specification.
 ```
 
-Los generadores pueden superar el límite habitual de tres archivos o unas 50 líneas por paso. El plan debe dividir el trabajo o incluir una excepción explícita y acotada antes de ejecutarlo.
+Generators may exceed the usual limit of three files or about 50 diff lines per step. The plan must split the work or include an explicit, narrowly scoped exception before execution.
 
-**3. Crea y verifica la base:**
+**3. Create and verify the foundation:**
 
 ```text
-@pair docs/stories/001-preparacion-inicial.md
+@pair docs/stories/001-initial-preparation.md
 ```
 
-Tras revisar las acciones y comprobaciones:
+After reviewing the actions and checks:
 
 ```text
-Apruebo la lista. Ejecuta la preparación completa aprobada,
-verifica cada parte y detente al terminar o ante un bloqueo.
+I approve the list. Execute all approved preparation, verify each part,
+and stop when finished or if blocked.
 ```
 
-La IA crea directorios, inicializa proyectos e instala lo acordado. Usa comprobaciones reales, sin fabricar tests fallidos para instalaciones. Solo marca la preparación como verificada cuando pasan las comprobaciones acordadas.
+The AI creates directories, initializes projects, and installs what was agreed. It uses real checks rather than manufacturing failing tests for installations. Preparation is only marked verified after the agreed checks pass.
 
-**4. Continúa con las funcionalidades:**
+**4. Continue with features:**
 
 ```text
-@backlog Quiero que los clientes consulten horarios disponibles.
-Por ahora no implementemos la reserva.
+@backlog I want customers to view available time slots.
+Do not implement booking yet.
 ```
 
-Con la base preparada, continúa con `@story` y `@pair` como en el primer ejemplo, sin repetir `@setup`.
+With the foundation ready, continue with `@story` and `@pair` as in the first example, without repeating `@setup`.
 
-## Avance y nuevas sesiones
+## Progress and new sessions
 
-`AGENTS.md` conserva decisiones generales y estado de preparación. Cada archivo de historia contiene criterios, plan, alcance y una sección de avance mantenida por `@pair`, por ejemplo:
+`AGENTS.md` holds general decisions and preparation status. Each story file contains its criteria, plan, scope, and a progress section maintained by `@pair`, for example:
 
 ```markdown
-## Avance
-- [x] Acceso con credenciales válidas — integración.
-- [ ] Rechazo de contraseña incorrecta — integración.
+## Progress
+- [x] Sign-in with valid credentials — integration.
+- [ ] Reject an incorrect password — integration.
 
-## Última verificación
-Comando, directorio y resultado real de las pruebas ejecutadas.
+## Last verification
+Command, working directory, and actual results of the tests executed.
 
-## Siguiente paso
-Implementar el rechazo de contraseña incorrecta.
+## Next step
+Implement rejection of an incorrect password.
 ```
 
-Solo se marca `[x]` con evidencia real. Aprobar una historia no equivale a implementarla; las verificaciones manuales pendientes impiden darla por completada. Se respetan otras ubicaciones establecidas en el proyecto y no se sobrescriben historias para añadir nuevas.
+Items are marked `[x]` only with actual evidence. Approving a story does not mean it is implemented; pending manual verification prevents completion. Established project locations are respected, and existing stories are not overwritten to add new ones.
 
-Para retomar en otra sesión:
+To resume in another session:
 
 ```text
 @pair docs/stories/002-login.md
 ```
 
-También admite `@pair 002-login.md` si no hay ambigüedad. El agente contrasta el avance con el código y las comprobaciones antes de continuar. Si no guardaste la especificación, tendrás que proporcionarla de nuevo.
+`@pair 002-login.md` also works if the name is unambiguous. The agent compares saved progress with the code and checks before continuing. If you did not save the specification, you will need to provide it again.
 
-## Herramientas y reglas de ejecución
+## Tools and execution rules
 
-- **Context7:** documentación ante dudas concretas; reutiliza respuestas útiles disponibles en contexto.
-- **MCP específicos:** se añaden si aportan capacidades adicionales. **Playwright MCP** es opcional para inspección del navegador y no sustituye la suite de pruebas.
-- **`frontend-design`:** se propone por defecto si hay interfaz; no viene incluida y se comprueban su fuente y compatibilidad antes de instalarla con aprobación.
-- **TDD:** un test → rojo esperado → código mínimo → verde → pausa. Puedes pedir varios ciclos consecutivos, siempre uno a uno. Un fallo de entorno no cuenta como rojo funcional.
-- **Bloqueos:** `@pair` se detiene ante decisiones fuera del plan, dos intentos sin verde, necesidad de alterar tests existentes para hacerlos pasar o pasos que excedan los límites sin una excepción aprobada.
-- **Git:** tú haces los commits y push; `@pair` no ejecuta `git commit`, `git push` ni `git reset`.
+- **Context7:** documentation for specific questions; reuse useful answers available in context.
+- **Specialized MCP servers:** added when they provide additional capabilities. **Playwright MCP** is optional for browser inspection and does not replace the test suite.
+- **`frontend-design`:** proposed by default for projects with a UI; it is not bundled, and its source and compatibility are checked before installation with approval.
+- **TDD:** one test → expected red → minimum code → green → pause. You can request several consecutive cycles, always one at a time. An environment failure does not count as behavioral red.
+- **Blockers:** `@pair` stops for decisions outside the plan, two attempts without green, a need to alter existing tests to make them pass, or steps exceeding limits without an approved exception.
+- **Git:** you handle commits and pushes; `@pair` never runs `git commit`, `git push`, or `git reset`.
 
-Las consultas y herramientas consumen contexto del modelo. El objetivo es trabajar con alcance claro y resultados verificables, sin prometer ahorro de tokens o cuota.
+Queries and tools consume model context. The goal is clear scope and verifiable results, without promising token or quota savings.
